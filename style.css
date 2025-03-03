@@ -1,0 +1,20 @@
+.road {
+    height: 250px;
+    background-color: gray;
+    display:flex;
+    align-items: center;
+    gap: 5%;
+    overflow: scroll;
+    position: relative;
+}
+.road div {
+    background-color: white;
+    height: 6px;
+    min-width: 5%;
+
+}
+.road div span {
+    position:absolute;
+    bottom: 20px;
+}
+
