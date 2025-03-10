@@ -1,4 +1,12 @@
-function smoothScrollSequence(container, actions) {
+function convertSpeedToPixelsPerSecond(speedInKmh) {
+    const screenWidth = window.innerWidth;
+    const metersToPixels = 0.05 * screenWidth; // 1 метр = 5% ширины экрана
+    const speedInMs = speedInKmh * (1000 / 3600); // Конвертация км/ч в м/с
+    const speedInPixelsPerSecond = speedInMs * metersToPixels; // Конвертация м/с в пиксели/секунду
+    return speedInPixelsPerSecond;
+}
+
+function smoothScrollSequence(container, speed, actions) {
     let currentActionIndex = 0;
     let startTime = null;
     let startScrollLeft = 0;
@@ -12,7 +20,7 @@ function smoothScrollSequence(container, actions) {
 
         if (currentAction.type === 'scroll') {
             // Calculate the scroll distance
-            const distance = currentAction.speed * (elapsed / 1000); // Distance = speed * time
+            const distance = convertSpeedToPixelsPerSecond(speed) * (elapsed / 1000); // Distance = speed * time
 
             if (isLastAction) {
                 // Smooth deceleration for the last action

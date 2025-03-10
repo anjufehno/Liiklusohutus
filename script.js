@@ -1,6 +1,45 @@
 import { smoothScrollSequence } from "./animation.js"
-console.log(smoothScrollSequence);
-const roadContainer = document.querySelector(".road")
+
+const roadContainer = document.querySelector(".roadContainer")
+const speedContainer = document.querySelector(".speedContainer")
+const surfaceContainer = document.querySelector(".surfaceContainer")
+start.disabled=true
+
+let speed=0
+let surface=0
+
+const arrSurface=[0.1, 0.25, 0.5, 0.8]
+const buttonsSurface=[]
+arrSurface.forEach(su => {
+    const btn = document.createElement("button")
+    buttonsSurface.push(btn)
+    btn.textContent=su
+    surfaceContainer.append(btn)
+    btn.onclick= function(){
+        surface=su
+        start.disabled=false
+        buttonsSurface.forEach(b =>{
+            if(btn!== b) b.disabled=true
+        })
+    }
+});
+
+const arrSpeed=[30,40,50,60,80,100,120]
+const buttonsSpeed=[]
+arrSpeed.forEach(s => {
+    const btn = document.createElement("button")
+    buttonsSpeed.push(btn)
+    btn.textContent=s
+    speedContainer.append(btn)
+    btn.onclick= function(){
+        speed=s
+        start.disabled=false
+        buttonsSpeed.forEach(b =>{
+            if(btn!== b) b.disabled=true
+        })
+    }
+});
+
 let str = "";
 let gap = 0
 for (let i = 0; i < 250; i++) {
@@ -14,32 +53,12 @@ for (let i = 0; i < 250; i++) {
 }
 roadContainer.innerHTML = str
 
-
-smoothScrollSequence(roadContainer, [
-    { type: 'scroll', speed: 2778, duration: 2000 }, // Scroll at 100px/sec for 1 second
-    { type: 'pause', duration: 1000 },              // Pause for 1 second
-    { type: 'scroll', speed: 200, duration: 2000 }, // Scroll at 100px/sec for 2 seconds
-    { type: 'pause', duration: 500 },               // Pause for 0.5 second
-    { type: 'scroll', speed: 200, duration: 5000 }, // Scroll at 100px/sec with gradual slowing down
-]);
-
-function kmhToPxMs(speedKmh, screenWidth) {
-    // 1 km/h = 1000 m / 3600 s = 1000 / 3600000 m/ms = 1 / 3.6 m/ms
-    let speedMps = speedKmh / 3.6; // Speed in m/s
-    let speedMms = speedMps / 1; // Speed in m/ms
-    
-    // 1 meter = 100 pixels
-    let metersToPixels = 100;
-    
-    // Convert speed to pixels/ms
-    let speedPxMs = speedMms * metersToPixels;
-    
-    return speedPxMs;
+start.onclick= function(){
+    smoothScrollSequence(roadContainer, speed,[
+        { type: 'scroll', duration: 2000 }, // Scroll at 100px/sec for 1 second
+        { type: 'pause', duration: 1000 },              // Pause for 1 second
+        { type: 'scroll', duration: 2000 }, // Scroll at 100px/sec for 2 seconds
+        { type: 'pause', duration: 500 },               // Pause for 0.5 second
+        { type: 'scroll', duration: 5000 }, // Scroll at 100px/sec with gradual slowing down
+    ]);
 }
-
-// Example usage:
-let screenWidth = window.innerWidth; // Screen width in pixels
-let speedKmh = 100; // Speed in km/h
-let speedPxMs = kmhToPxMs(speedKmh, screenWidth);
-
-console.log(`Speed ${speedKmh} km/h = ${speedPxMs.toFixed(2)} px/ms`);
