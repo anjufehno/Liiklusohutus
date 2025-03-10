@@ -55,10 +55,10 @@ roadContainer.innerHTML = str
 
 start.onclick= function(){
     smoothScrollSequence(roadContainer, speed,[
-        { type: 'scroll', duration: 2000 }, // Scroll at 100px/sec for 1 second
-        { type: 'pause', duration: 1000 },              // Pause for 1 second
-        { type: 'scroll', duration: 2000 }, // Scroll at 100px/sec for 2 seconds
-        { type: 'pause', duration: 500 },               // Pause for 0.5 second
-        { type: 'scroll', duration: 5000 }, // Scroll at 100px/sec with gradual slowing down
+        { type: 'scroll', duration: 2000 },
+        { type: 'pause', duration: 1000 },
+        { type: 'scroll', duration: 2000 },
+        { type: 'pause', duration: 500 },
+        { type: 'scroll', duration: 5000 },
     ]);
 }
