@@ -1,4 +1,5 @@
 import { smoothScrollSequence } from "./animation.js"
+import { brakeDistance } from "./brakedistance.js"
 
 const roadContainer = document.querySelector(".roadContainer")
 const speedContainer = document.querySelector(".speedContainer")
@@ -8,7 +9,7 @@ start.disabled=true
 let speed=0
 let surface=0
 
-const arrSurface=[0.1, 0.25, 0.5, 0.8]
+const arrSurface=[0.8, 0.5, 0.25, 0.1]
 const buttonsSurface=[]
 arrSurface.forEach(su => {
     const btn = document.createElement("button")
@@ -17,10 +18,10 @@ arrSurface.forEach(su => {
     surfaceContainer.append(btn)
     btn.onclick= function(){
         surface=su
-        start.disabled=false
-        buttonsSurface.forEach(b =>{
-            if(btn!== b) b.disabled=true
-        })
+        if(speed) start.disabled=false
+        const active=surfaceContainer.querySelector(".active")
+        active?.classList.remove("active")
+        btn.classList.add("active")
     }
 });
 
@@ -33,10 +34,10 @@ arrSpeed.forEach(s => {
     speedContainer.append(btn)
     btn.onclick= function(){
         speed=s
-        start.disabled=false
-        buttonsSpeed.forEach(b =>{
-            if(btn!== b) b.disabled=true
-        })
+        if(surface) start.disabled=false
+        const active=speedContainer.querySelector(".active")
+        active?.classList.remove("active")
+        btn.classList.add("active")
     }
 });
 
@@ -53,12 +54,15 @@ for (let i = 0; i < 250; i++) {
 }
 roadContainer.innerHTML = str
 
+start.disabled = true
 start.onclick= function(){
-    smoothScrollSequence(roadContainer, speed,[
+    buttonsSpeed.forEach(b => b.disabled=true)
+    buttonsSurface.forEach(b => b.disabled=true)
+    smoothScrollSequence(roadContainer, speed, [
         { type: 'scroll', duration: 2000 },
         { type: 'pause', duration: 1000 },
         { type: 'scroll', duration: 2000 },
         { type: 'pause', duration: 500 },
-        { type: 'scroll', duration: 5000 },
+        { type: 'scroll', distance: brakeDistance(speed,surface) },
     ]);
 }

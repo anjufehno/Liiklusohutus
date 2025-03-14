@@ -22,9 +22,19 @@ function smoothScrollSequence(container, speed, actions) {
             const distance = convertSpeedToPixelsPerSecond(speed) * (elapsed / 1000);
 
             if (isLastAction) {
-                const progress = Math.min(elapsed / currentAction.duration, 1);
+                const pixelsPerMeter = window.innerWidth * 0.05;
+
+                const distanceInPixels = currentAction.distance * pixelsPerMeter;
+                const totalTime = (distanceInPixels / (speed * pixelsPerMeter)) * 1000;
+                const progress = Math.min(elapsed / totalTime, 1);
                 const easeOut = 1 - Math.pow(1 - progress, 3);
-                container.scrollLeft = startScrollLeft + distance * easeOut;
+                container.scrollLeft = startScrollLeft + distanceInPixels * easeOut;
+
+                if (elapsed >= totalTime) {
+                    currentActionIndex++;
+                    startTime = null;
+                    startScrollLeft = container.scrollLeft;
+                }
             } else {
                 
                 container.scrollLeft = startScrollLeft + distance;

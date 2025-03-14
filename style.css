@@ -36,6 +36,12 @@
     cursor: pointer;
 }
 
+.speedContainer .active{
+    border-color: black;
+    color: black;
+}
+
+
 .surfaceContainer {
     display: flex;
     gap: 10px;
@@ -50,6 +56,11 @@
     border-radius: 20%;
     background: none;
     cursor: pointer;
+}
+
+.surfaceContainer .active{
+    border-color: black;
+    color: black;
 }
 
 #start {
