@@ -77,4 +77,5 @@ start.onclick= function(){
         { type: 'pause', duration: 500 },
         { type: 'scroll', distance: brakeDistance(speed,surface) },
     ]);
+    console.log(brakeDistance(speed,surface))
 }

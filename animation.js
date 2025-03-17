@@ -6,10 +6,11 @@ function convertSpeedToPixelsPerSecond(speedInKmh) {
     return speedInPixelsPerSecond;
 }
 
-function smoothScrollSequence(container, speed, actions) {
+function smoothScrollSequence(container, speedKmh, actions) {
     let currentActionIndex = 0;
     let startTime = null;
     let startScrollLeft = 0;
+    const speed = convertSpeedToPixelsPerSecond(speedKmh) 
 
     function executeAction(timestamp) {
         if (!startTime) startTime = timestamp;
@@ -19,13 +20,19 @@ function smoothScrollSequence(container, speed, actions) {
         const isLastAction = currentActionIndex === actions.length - 1;
 
         if (currentAction.type === 'scroll') {
-            const distance = convertSpeedToPixelsPerSecond(speed) * (elapsed / 1000);
+            const distance = speed* (elapsed / 1000);
 
             if (isLastAction) {
-                const pixelsPerMeter = window.innerWidth * 0.05;
+                // const pixelsPerMeter = window.innerWidth * 0.05;
 
+                // const distanceInPixels = currentAction.distance * pixelsPerMeter;
+                // const totalTime = (distanceInPixels / (speed * pixelsPerMeter)) * 1000;
+                // const progress = Math.min(elapsed / totalTime, 1);
+                // const easeOut = 1 - Math.pow(1 - progress, 3);
+                // container.scrollLeft = startScrollLeft + distanceInPixels * easeOut;
+                const pixelsPerMeter = window.innerWidth * 0.05;
                 const distanceInPixels = currentAction.distance * pixelsPerMeter;
-                const totalTime = (distanceInPixels / (speed * pixelsPerMeter)) * 1000;
+                const totalTime = (distanceInPixels / speed) * 1000;
                 const progress = Math.min(elapsed / totalTime, 1);
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 container.scrollLeft = startScrollLeft + distanceInPixels * easeOut;
