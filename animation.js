@@ -7,6 +7,19 @@ function convertSpeedToPixelsPerSecond(speedInKmh) {
 }
 
 function smoothScrollSequence(container, speedKmh, actions) {
+    const messageContainer = document.querySelector('.messageContainer');
+    const leftWheel = document.querySelector('.wheel_first');
+    const rightWheel = document.querySelector('.wheel_second');
+
+    function animateWheels(distance) {
+        const wheelRadius = 0.3;
+        const wheelCircumference = 2 * Math.PI * wheelRadius;
+
+        const angle = (distance / wheelCircumference) * 360;
+        leftWheel.style.transform = `rotate(${angle}deg)`;
+        rightWheel.style.transform = `rotate(${angle}deg)`;
+    }
+
     let currentActionIndex = 0;
     let startTime = null;
     let startScrollLeft = 0;
@@ -23,20 +36,12 @@ function smoothScrollSequence(container, speedKmh, actions) {
             const distance = speed* (elapsed / 1000);
 
             if (isLastAction) {
-                // const pixelsPerMeter = window.innerWidth * 0.05;
-
-                // const distanceInPixels = currentAction.distance * pixelsPerMeter;
-                // const totalTime = (distanceInPixels / (speed * pixelsPerMeter)) * 1000;
-                // const progress = Math.min(elapsed / totalTime, 1);
-                // const easeOut = 1 - Math.pow(1 - progress, 3);
-                // container.scrollLeft = startScrollLeft + distanceInPixels * easeOut;
                 const pixelsPerMeter = window.innerWidth * 0.05;
                 const distanceInPixels = currentAction.distance * pixelsPerMeter;
                 const totalTime = (distanceInPixels / speed) * 1000;
                 const progress = Math.min(elapsed / totalTime, 1);
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 container.scrollLeft = startScrollLeft + distanceInPixels * easeOut;
-
                 if (elapsed >= totalTime) {
                     currentActionIndex++;
                     startTime = null;
@@ -45,6 +50,7 @@ function smoothScrollSequence(container, speedKmh, actions) {
             } else {
                 
                 container.scrollLeft = startScrollLeft + distance;
+                animateWheels(distance)
             }
 
             if (elapsed >= currentAction.duration) {
@@ -53,7 +59,7 @@ function smoothScrollSequence(container, speedKmh, actions) {
                 startScrollLeft = container.scrollLeft;
             }
         } else if (currentAction.type === 'pause') {
-            
+            messageContainer.textContent=currentAction.message
             if (elapsed >= currentAction.duration) {
                 currentActionIndex++;
                 startTime = null;

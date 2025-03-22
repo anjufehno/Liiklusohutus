@@ -58,7 +58,7 @@ let gap = 0
 for (let i = 0; i < 250; i++) {
     if (i % 5 === 0 && i !== 0) {
         gap += 10;
-        str += `<div><span>${gap}</span></div>`;
+        str += `<div><span>${gap} m</span></div>`;
     } else {
         str += `<div></div>`;
     }
@@ -72,9 +72,9 @@ start.onclick= function(){
     buttonsSurface.forEach(b => b.disabled=true)
     smoothScrollSequence(roadContainer, speed, [
         { type: 'scroll', duration: 2000 },
-        { type: 'pause', duration: 1000 },
+        { type: 'pause', duration: 1000, message:"Umbes sekund pärast takistuse märkamist alustab autojuht pidurdamist. Selle aja jooksul liigub auto x meetrit, kui kiirus on y km/h. " },
         { type: 'scroll', duration: 2000 },
-        { type: 'pause', duration: 500 },
+        { type: 'pause', duration: 500, message:"Auto peatub 1 sekundi pärast pidurdamise algust. Pidurdusteekond on x meetrit."  },
         { type: 'scroll', distance: brakeDistance(speed,surface) },
     ]);
     console.log(brakeDistance(speed,surface))
