@@ -8,8 +8,9 @@ function convertSpeedToPixelsPerSecond(speedInKmh) {
 
 function smoothScrollSequence(container, speedKmh, actions) {
     const messageContainer = document.querySelector('.messageContainer');
-    const leftWheel = document.querySelector('.wheel_first');
-    const rightWheel = document.querySelector('.wheel_second');
+    const carContainer = document.querySelector('.carContainer');
+    const leftWheel = document.querySelector('.wheel_first img');
+    const rightWheel = document.querySelector('.wheel_second img');
 
     function animateWheels(distance) {
         const wheelRadius = 0.3;
@@ -36,6 +37,7 @@ function smoothScrollSequence(container, speedKmh, actions) {
             const distance = speed* (elapsed / 1000);
 
             if (isLastAction) {
+                carContainer.classList.add('stop')
                 const pixelsPerMeter = window.innerWidth * 0.05;
                 const distanceInPixels = currentAction.distance * pixelsPerMeter;
                 const totalTime = (distanceInPixels / speed) * 1000;

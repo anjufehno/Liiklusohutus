@@ -29,6 +29,7 @@ label {
     overflow: scroll;
     position: relative;
     scrollbar-width: none; 
+    z-index: 1;
 }
 
 .roadContainer div {
@@ -39,8 +40,8 @@ label {
 }
 .roadContainer div span {
     position:absolute;
-    bottom: 3px;
-    font-size: 18px;
+    bottom: 0px;
+    font-size: 16px;
     font-weight: 500;
     font-family: Arial;
     color:white;
@@ -145,14 +146,16 @@ button[data-coeff="0.8"] {
 .carContainer{
     position: absolute;
     width: 260px;
-    top: -50px;
-    z-index: 1;
+    top: -10px;
+    left: 70px;
+    z-index: 2;
 }
 
 img{
     width: 100%;
-    margin-top: 30px;
-    margin-left: 70px;
+    display: block;
+    z-index: 2;
+    position: relative
 }
 
 .wheel_first, .wheel_second{
@@ -171,6 +174,21 @@ img{
     bottom: -0.4%;
 }
 
-
+.stop{
+    .wheel_first::before, .wheel_second::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        width: 300px;
+        height: 6px;
+        background-color: black;
+        opacity: 0.5;
+        z-index: 1;
+    }
+    .wheel_first::before{
+        bottom: 10px;
+    }
+}
 
 

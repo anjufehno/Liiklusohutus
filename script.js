@@ -70,12 +70,12 @@ start.disabled = true
 start.onclick= function(){
     buttonsSpeed.forEach(b => b.disabled=true)
     buttonsSurface.forEach(b => b.disabled=true)
+    const distance=brakeDistance(speed,surface)
     smoothScrollSequence(roadContainer, speed, [
         { type: 'scroll', duration: 2000 },
-        { type: 'pause', duration: 1000, message:"Umbes sekund pärast takistuse märkamist alustab autojuht pidurdamist. Selle aja jooksul liigub auto x meetrit, kui kiirus on y km/h. " },
+        { type: 'pause', duration: 1000, message:`Umbes sekund pärast takistuse märkamist alustab autojuht pidurdamist. Selle aja jooksul liigub auto ${Math.round(5*speed/18)} meetrit, kui kiirus on ${speed} km/h.` },
         { type: 'scroll', duration: 2000 },
-        { type: 'pause', duration: 500, message:"Auto peatub 1 sekundi pärast pidurdamise algust. Pidurdusteekond on x meetrit."  },
-        { type: 'scroll', distance: brakeDistance(speed,surface) },
+        { type: 'pause', duration: 500, message: `Auto peatub 1 sekundi pärast pidurdamise algust. Pidurdusteekond on ${Math.round(distance)} meetrit.`  },
+        { type: 'scroll', distance: distance},
     ]);
-    console.log(brakeDistance(speed,surface))
 }
