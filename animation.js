@@ -6,7 +6,7 @@ function convertSpeedToPixelsPerSecond(speedInKmh) {
     return speedInPixelsPerSecond;
 }
 
-function smoothScrollSequence(container, speedKmh, actions) {
+function smoothScrollSequence(container, speedKmh, actions, complited) {
     const messageContainer = document.querySelector('.messageContainer');
     const carContainer = document.querySelector('.carContainer');
     const leftWheel = document.querySelector('.wheel_first img');
@@ -48,6 +48,7 @@ function smoothScrollSequence(container, speedKmh, actions) {
                     currentActionIndex++;
                     startTime = null;
                     startScrollLeft = container.scrollLeft;
+                    complited()
                 }
             } else {
                 

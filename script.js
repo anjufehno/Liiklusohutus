@@ -1,8 +1,13 @@
 import { smoothScrollSequence } from "./animation.js"
-import { brakeDistance } from "./brakedistance.js"
+import { brakeDistance, arrSurface } from "./brakedistance.js"
 
 const roadContainer = document.querySelector(".roadContainer")
 const speedContainer = document.querySelector(".speedContainer")
+const modal = document.getElementById("modal");
+const textModal = document.getElementById("textModal");
+const closeModal = document.getElementById("closeModal");
+
+closeModal.onclick = ()=> modal.close();
 
 start.disabled=true
 
@@ -10,12 +15,6 @@ let speed=0
 let surface = 0;
 const surfaceLabel = document.querySelector('label[for="surfaceContainer"]');
 
-const arrSurface = [
-    { value: 0.8, text: "Kuiv tee" },
-    { value: 0.5, text: "Märg tee" },
-    { value: 0.25, text: "Lumine tee" },
-    { value: 0.1, text: "Jäätee" }
-];
 
 const buttonsSurface = [];
 const surfaceContainer = document.querySelector(".surfaceContainer");
@@ -28,7 +27,7 @@ arrSurface.forEach(su => {
 
     btn.onclick = function () {
         surface = su.value;
-        surfaceLabel.textContent = `Valige teekate: ${su.text}`; // Обновляем текст label
+        surfaceLabel.textContent = `Valige teekate: ${su.text}`;
         if (speed) start.disabled = false;
         const active = surfaceContainer.querySelector(".active");
         active?.classList.remove("active");
@@ -67,15 +66,30 @@ for (let i = 0; i < 250; i++) {
 roadContainer.innerHTML = str
 
 start.disabled = true
+let complited = false
 start.onclick= function(){
+    if (complited) location.reload()
+    start.disabled = true
     buttonsSpeed.forEach(b => b.disabled=true)
     buttonsSurface.forEach(b => b.disabled=true)
     const distance=brakeDistance(speed,surface)
+    const reaction = Math.round(5*speed/18)
+    const braking = Math.round(distance)
     smoothScrollSequence(roadContainer, speed, [
         { type: 'scroll', duration: 2000 },
-        { type: 'pause', duration: 1000, message:`Umbes sekund pärast takistuse märkamist alustab autojuht pidurdamist. Selle aja jooksul liigub auto ${Math.round(5*speed/18)} meetrit, kui kiirus on ${speed} km/h.` },
+        { type: 'pause', duration: 1000, message:`Umbes sekund pärast takistuse märkamist alustab autojuht pidurdamist. Selle aja jooksul liigub auto ${reaction} meetrit, kui kiirus on ${speed} km/h.` },
         { type: 'scroll', duration: 2000 },
-        { type: 'pause', duration: 500, message: `Auto peatub 1 sekundi pärast pidurdamise algust. Pidurdusteekond on ${Math.round(distance)} meetrit.`  },
+        { type: 'pause', duration: 500, message: `Auto peatub 1 sekundi pärast pidurdamise algust. Pidurdusteekond on ${braking} meetrit.`  },
         { type: 'scroll', distance: distance},
-    ]);
+    ], ()=> {
+        complited = true
+        start.disabled = false
+        start.textContent = 'Alusta uuesti'
+        modal.showModal();
+        textModal.innerHTML = `
+        <div><b>Reaktsiooniteekond:</b> ${reaction} m </div>
+        <div><b>Pidurdusteekond:</b> ${braking} m </div>
+        <div><b>Peatumisteekond:</b> ${braking+reaction} m </div>
+        `
+    });
 }

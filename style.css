@@ -132,11 +132,11 @@ button[data-coeff="0.8"] {
     border: none;
     border-radius: 10px;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-#start:focus {
-    background-color:#f82836;
-    outline: none;
+#start:disabled {
+  opacity: 0.7;
 }
 
 .roadWrapper{
@@ -189,6 +189,25 @@ img{
     .wheel_first::before{
         bottom: 10px;
     }
+}
+
+dialog {
+    border: none;
+    border-radius: 10px;
+    padding: 40px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    max-width: 680px;
+    line-height: 1.5;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    background: none;
+    border: none;
 }
 
 
