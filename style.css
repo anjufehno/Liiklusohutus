@@ -28,7 +28,8 @@ label {
     gap: 5%;
     overflow: scroll;
     position: relative;
-    scrollbar-width: none; 
+    scrollbar-width: none;
+    pointer-events: none;
     z-index: 1;
 }
 
@@ -150,7 +151,7 @@ button[data-coeff="0.8"] {
     position: absolute;
     width: 260px;
     top: -10px;
-    left: 70px;
+    left: min(8vw,70px);
     z-index: 2;
 }
 
