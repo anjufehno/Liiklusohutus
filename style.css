@@ -105,16 +105,16 @@ label {
 
 
 button[data-coeff="0.8"] {
-    background-image: url('../pictures/dry_road.jpg');
+    background-image: url('./pictures/dry_road.jpg');
   }
   button[data-coeff="0.5"] {
-    background-image: url('../pictures/wet_road.jpg');
+    background-image: url('./pictures/wet_road.jpg');
   }
   button[data-coeff="0.25"] {
-    background-image: url('../pictures/snow_road.jpg');
+    background-image: url('./pictures/snow_road.jpg');
   }
   button[data-coeff="0.1"] {
-    background-image: url('../pictures/ice_road.jpg');
+    background-image: url('./pictures/ice_road.jpg');
     background-size: 118%;
     background-color: white;
   }
@@ -201,6 +201,7 @@ dialog {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     min-width: 300px;
     max-width: 680px;
+    max-height: 100dvh;
     line-height: 1.5;
 }
 .close {
