@@ -7,7 +7,7 @@ body{
 
 h1 {
     text-align: center;
-    font-size: 40px;
+    font-size: min(10vw,40px);
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -53,27 +53,30 @@ label {
 .messageContainer{
     padding: 30px 20px;
     text-align: center;
+    min-height: 5em;
 }
 
 .speedContainer {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: min(2vw, 10px);
     color: gray;
-    margin-bottom: 5px 0;
-
+    margin-bottom: 20px;
 }
 
 .speedContainer button {
-    width: 60px;
-    height: 60px;
+    max-width: 60px;
+    width: 12vw;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     border: 5px solid gray;
-    font-size: 20px;
+    font-size: min(4.5vw, 20px);
     font-weight: bold;
     color: gray;
     cursor: pointer;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .speedContainer .active{
